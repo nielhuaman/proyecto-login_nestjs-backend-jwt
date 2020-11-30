@@ -8,6 +8,10 @@ import { ProductoModule } from './producto/producto.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { RolModule } from './rol/rol.module';
 import { AuthModule } from './auth/auth.module';
+import { CursosModule } from './cursos/cursos.module';
+
+
+
 
 @Module({
   imports: [
@@ -33,7 +37,8 @@ import { AuthModule } from './auth/auth.module';
     ProductoModule,
     UsuarioModule,
     RolModule,
-    AuthModule
+    AuthModule,
+    CursosModule
   ],
   controllers: [AppController],
   providers: [AppService],
