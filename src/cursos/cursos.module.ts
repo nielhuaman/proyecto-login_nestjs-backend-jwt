@@ -1,3 +1,4 @@
+
 import { CursoEntity } from './entities/curso.entity';
 import { Module } from '@nestjs/common';
 import { CursosService } from './cursos.service';

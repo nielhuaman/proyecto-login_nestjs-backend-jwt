@@ -1,17 +1,26 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CursosService } from './cursos.service';
 import { CursoDto } from './dto/create-curso.dto';
-
+import { RolDecorator } from 'src/decorators/rol.decorator';
+import { JwtAuthGuard } from './../guards/jwt.guard';
+import { RolNombre } from './../rol/rol.enum';
+import { RolesGuard } from './../guards/rol.guard';
 
 @Controller('cursos')
 export class CursosController {
   constructor(private readonly cursosService: CursosService) {}
   
-  @Post()
-  create(@Body() dto: CursoDto) {
-   
+ 
+
+  @RolDecorator(RolNombre.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+   @Post()
+  async create(@Body() dto: CursoDto) {
+      return await this.cursosService.create(dto);
   }
 
+  @RolDecorator(RolNombre.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAll() {
     return this.cursosService.findAll();

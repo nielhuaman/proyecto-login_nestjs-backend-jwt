@@ -3,10 +3,17 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity({name: 'curso'})
 
 export class CursoEntity {
-    @PrimaryGeneratedColumn()
+    
+    @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column({type: 'varchar', length: 10, nullable: false, unique: true})
+    @Column({type: 'varchar', length: 10, nullable: false})
+    codigo: string;
+
+    @Column({type: 'integer', nullable: false})
+    codigo_profesor: number;
+
+    @Column({type: 'varchar', length: 10, nullable: false})
     nombre: string;
     
     @Column({type: 'varchar', length: 10, nullable: false, unique: true})

@@ -4,11 +4,11 @@ import { IsNotBlank } from "src/decorators/is-not-blank.decorator";
 
 export class CursoDto {
 
-    @IsNotBlank({message: 'el nombre no puede estar vacío'})
-    nombre?: string;
+    @IsNotBlank({message: 'el curso no puede estar vacío'})
+    curso?: string;
 
     @IsNumber()
     @IsNotEmpty()
-    @Min(10, {message: 'el precio debe de ser al menos de 10 €'})
-    precio?: number;
+    @Min(1, {message: 'creditos debe ser mayor que 0'})
+    creditos?: number;
 }
