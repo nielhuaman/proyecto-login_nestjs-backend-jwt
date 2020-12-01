@@ -36,14 +36,24 @@ async create(createCursoDto: CursoDto): Promise<any> {
   }
 
   
-
-
-  findOne(id: number) {
-    return `This action returns a #${id} curso`;
+  async findOne(id: number): Promise<CursoEntity> {
+    const curso = await this.CursoRepository.findOne(id);
+    if (!curso) {
+        throw new NotFoundException(new MessageDto('no existe'));
+    }
+    return curso;
   }
 
-  update(id: number, createCursoDto: CursoDto) {
-    return `This action updates a #${id} curso`;
+  async update(id: number, createCursoDto: CursoDto): Promise<any> {
+    const curso = await this.findOne(id);
+        if (!curso)
+            throw new NotFoundException(new MessageDto('no existe el curso'));
+        const exists = await this.findByCurso(createCursoDto.curso);
+        if (exists && exists.id !== id) throw new BadRequestException(new MessageDto('ese producto ya existe'));
+        createCursoDto.curso ? curso.curso = createCursoDto.curso : curso.nombre = curso.nombre;
+        createCursoDto.creditos ? curso.creditos = createCursoDto.creditos : curso.creditos = curso.creditos;
+        await this.CursoRepository.save(curso);
+        return new MessageDto(`curso ${curso.curso} actualizado`);
   }
 
   remove(id: number) {

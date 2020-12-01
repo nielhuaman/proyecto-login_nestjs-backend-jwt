@@ -31,11 +31,15 @@ export class CursosController {
     return this.cursosService.findOne(+id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() CursoDto: CursoDto) {
-    return this.cursosService.update(+id, CursoDto);
-  }
 
+  @RolDecorator(RolNombre.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Put(':id')
+  async update(@Param('id', ParseIntPipe) id: number, @Body() CursoDto: CursoDto) {
+    return await this.cursosService.update(id, CursoDto);
+  }
+  
+ 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cursosService.remove(+id);
